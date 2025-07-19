@@ -3,9 +3,8 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Loop YouTube videos with custom start and end times
-// @author       You
+// @author       Faynt + AI
 // @match        https://www.youtube.com/watch*
-// @match        https://m.youtube.com/watch*
 // @grant        none
 // ==/UserScript==
 
@@ -177,14 +176,19 @@
         const endInput = document.getElementById('end-time');
         
         startTime = timeToSeconds(startInput.value) || 0;
-        endTime = timeToSeconds(endInput.value) || video.duration;
+        
+        // If end time is empty, use video duration (loop whole video)
+        if (!endInput.value || endInput.value.trim() === '') {
+            endTime = video.duration - 1;
+        } else {
+            endTime = timeToSeconds(endInput.value);
+        }
 
         if (startTime >= endTime) {
             alert('Start time must be less than end time!');
             return;
         }
 
-        video.currentTime = startTime;
         isLooping = true;
 
         loopInterval = setInterval(() => {
