@@ -3,8 +3,9 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Loop YouTube videos with custom start and end times
-// @author       Faynt + AI
+// @author       You
 // @match        https://www.youtube.com/watch*
+// @match        https://m.youtube.com/watch*
 // @grant        none
 // ==/UserScript==
 
@@ -34,6 +35,18 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         `;
+
+        // Add CSS to hide panel in fullscreen
+        const style = document.createElement('style');
+        style.textContent = `
+            :-webkit-full-screen #youtube-looper-panel {
+                display: none !important;
+            }
+            :fullscreen #youtube-looper-panel {
+                display: none !important;
+            }
+        `;
+        document.head.appendChild(style);
 
         // Create header with title and minimize button
         const header = document.createElement('div');
