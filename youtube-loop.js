@@ -16,7 +16,7 @@
     let isLooping = false;
     let startTime = 0;
     let endTime = 0;
-    let isMinimized = false;
+    let isMinimized = true; // Start minimized
 
     // Create the control panel
     function createControlPanel() {
@@ -51,11 +51,6 @@
         // Create header with title and minimize button
         const header = document.createElement('div');
         header.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-bottom: 1px solid rgba(255,255,255,0.2); cursor: pointer;';
-        
-        const title = document.createElement('div');
-        title.textContent = 'YouTube Looper';
-        title.style.cssText = 'font-weight: bold;';
-        header.appendChild(title);
 
         const minimizeBtn = document.createElement('div');
         minimizeBtn.id = 'minimize-btn';
@@ -127,6 +122,12 @@
         content.appendChild(helpText);
 
         controlPanel.appendChild(content);
+
+        // Start in minimized state
+        content.style.display = 'none';
+        minimizeBtn.textContent = '+';
+        controlPanel.style.minWidth = 'auto';
+        header.style.borderBottom = 'none';
 
         // Add minimize/maximize functionality
         const toggleMinimize = () => {
